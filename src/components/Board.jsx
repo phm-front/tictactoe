@@ -29,7 +29,13 @@ const Board = memo((props) => {
   }
   // 监听squares变化
   useEffect(() => {
-    setWinner(calculateWinner(squares))
+    let res = calculateWinner(squares)
+    let remain = squares.filter(item => item === null).length
+    if (remain) {
+      setWinner(res)
+    } else if (res === null) {
+      setWinner('draw')
+    }
   }, [squares])
   const renderSquare = (i) => {
     return <Square value={squares[i]} clickEvent={() => handleBtnClick(i)} />;
